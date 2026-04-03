@@ -1,6 +1,6 @@
 const vagaRepository = require('../repositories/vagaRepository');
 
-async function registrarLeitura({ sensor, status, data }) {
+async function registrarLeitura({ sensor, status }) {
   const ultimo = await vagaRepository.buscarUltimoPorSensor(sensor);
 
   if (ultimo && ultimo.status === status) {
@@ -10,7 +10,7 @@ async function registrarLeitura({ sensor, status, data }) {
   const id = await vagaRepository.inserir({
     sensor_id: sensor,
     status,
-    data: new Date(data),
+    data: new Date(),
   });
 
   return { id };

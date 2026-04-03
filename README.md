@@ -19,16 +19,16 @@ A API persiste cada leitura no banco de dados. O status atual de uma vaga é sem
 ```json
 {
   "sensor": "1",
-  "status": "ocupado",
-  "data": "2024-10-01T14:30:00Z"
+  "status": "ocupado"
 }
 ```
 
-| Campo    | Tipo   | Descrição                              |
-|----------|--------|----------------------------------------|
-| `sensor` | string | Identificador do sensor (1 a 20)       |
-| `status` | string | `"ocupado"` ou `"livre"`               |
-| `data`   | string | Timestamp da leitura (ISO 8601)        |
+| Campo    | Tipo   | Descrição                        |
+|----------|--------|----------------------------------|
+| `sensor` | string | Identificador do sensor (1 a 20) |
+| `status` | string | `"ocupado"` ou `"livre"`         |
+
+> A data/hora do registro é definida pelo servidor no momento do recebimento, impedindo inserções com timestamps arbitrários.
 
 ## Requisitos
 
@@ -75,8 +75,7 @@ Registra uma leitura de sensor. Enviado pelo Arduino a cada mudança de estado.
 ```json
 {
   "sensor": "1",
-  "status": "ocupado",
-  "data": "2024-10-01T14:30:00Z"
+  "status": "ocupado"
 }
 ```
 
@@ -85,7 +84,7 @@ Registra uma leitura de sensor. Enviado pelo Arduino a cada mudança de estado.
 | Status | Descrição |
 |--------|-----------|
 | `201` | Leitura registrada com sucesso |
-| `400` | Campo ausente, status inválido, data inválida ou vaga já está no status enviado |
+| `400` | Campo ausente, status inválido ou vaga já está no status enviado |
 
 ```json
 // 201

@@ -1,22 +1,18 @@
 const vagaService = require('../services/vagaService');
 
 async function registrar(req, res) {
-  const { sensor, status, data } = req.body;
+  const { sensor, status } = req.body;
 
-  if (!sensor || !status || !data) {
-    return res.status(400).json({ erro: 'Campos obrigatórios: sensor, status, data' });
+  if (!sensor || !status) {
+    return res.status(400).json({ erro: 'Campos obrigatórios: sensor, status' });
   }
 
   if (!['ocupado', 'livre'].includes(status)) {
     return res.status(400).json({ erro: 'status deve ser "ocupado" ou "livre"' });
   }
 
-  if (isNaN(new Date(data).getTime())) {
-    return res.status(400).json({ erro: 'data inválida, use ISO 8601' });
-  }
-
   try {
-    const resultado = await vagaService.registrarLeitura({ sensor, status, data });
+    const resultado = await vagaService.registrarLeitura({ sensor, status });
     return res.status(201).json(resultado);
   } catch (err) {
     if (err.statusCode) {
