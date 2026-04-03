@@ -66,6 +66,75 @@ curl http://localhost:3000/health
 # {"status":"ok"}
 ```
 
+## Rotas
+
+### `POST /api/vagas`
+Registra uma leitura de sensor. Enviado pelo Arduino a cada mudança de estado.
+
+**Body**
+```json
+{
+  "sensor": "1",
+  "status": "ocupado",
+  "data": "2024-10-01T14:30:00Z"
+}
+```
+
+**Respostas**
+
+| Status | Descrição |
+|--------|-----------|
+| `201` | Leitura registrada com sucesso |
+| `400` | Campo ausente, status inválido, data inválida ou vaga já está no status enviado |
+
+```json
+// 201
+{ "id": 42 }
+
+// 400 - mesmo status
+{ "erro": "Vaga já está com status \"ocupado\"" }
+```
+
+---
+
+### `GET /api/vagas/:sensor/status`
+Retorna o status atual da vaga (último registro do sensor).
+
+**Exemplo:** `GET /api/vagas/1/status`
+
+**Respostas**
+
+| Status | Descrição |
+|--------|-----------|
+| `200` | Status encontrado |
+| `404` | Nenhum registro encontrado para o sensor |
+
+```json
+// 200
+{
+  "sensor_id": "1",
+  "status": "ocupado",
+  "data": "2024-10-01T14:30:00.000Z"
+}
+```
+
+---
+
+### `GET /api/vagas/:sensor/historico`
+Retorna todos os registros do sensor ordenados do mais recente ao mais antigo.
+
+**Exemplo:** `GET /api/vagas/1/historico`
+
+**Resposta `200`**
+```json
+[
+  { "id": 42, "sensor_id": "1", "status": "ocupado", "data": "2024-10-01T14:30:00.000Z" },
+  { "id": 31, "sensor_id": "1", "status": "livre",   "data": "2024-10-01T13:10:00.000Z" }
+]
+```
+
+---
+
 ## Stack
 
 | Tecnologia   | Versão |

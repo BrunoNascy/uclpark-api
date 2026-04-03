@@ -1,10 +1,8 @@
 const { Router } = require('express');
+const vagasRoutes = require('./vagas.routes');
 
 const router = Router();
 
-// Registre as rotas aqui
-// Exemplo:
-// const exampleRoutes = require('./example.routes');
-// router.use('/example', exampleRoutes);
+router.use('/vagas', vagasRoutes);
 
 module.exports = router;
