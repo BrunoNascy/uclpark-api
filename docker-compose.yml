@@ -1,0 +1,33 @@
+services:
+  db:
+    image: mariadb:11
+    container_name: uclpark-db
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root123
+      MARIADB_DATABASE: uclpark_db
+      MARIADB_USER: uclpark
+      MARIADB_PASSWORD: uclpark123
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    container_name: uclpark-api
+    restart: always
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
