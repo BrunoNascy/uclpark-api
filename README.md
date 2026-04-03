@@ -119,6 +119,16 @@ Retorna o status atual da vaga (último registro do sensor).
 
 ---
 
+### `GET /api/vagas/sensores`
+Retorna a lista de todos os sensores distintos que já registraram alguma leitura. Útil para a inicialização do app, quando é necessário descobrir quais sensores existem antes de buscar seus status individualmente.
+
+**Resposta `200`**
+```json
+["1", "2", "3", "10"]
+```
+
+---
+
 ### `GET /api/vagas/:sensor/historico`
 Retorna todos os registros do sensor ordenados do mais recente ao mais antigo.
 

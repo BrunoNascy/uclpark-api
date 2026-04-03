@@ -24,4 +24,8 @@ async function buscarStatusAtual(sensor_id) {
   return vagaRepository.buscarUltimoPorSensor(sensor_id);
 }
 
-module.exports = { registrarLeitura, buscarHistorico, buscarStatusAtual };
+async function listarSensores() {
+  return vagaRepository.listarSensores();
+}
+
+module.exports = { registrarLeitura, buscarHistorico, buscarStatusAtual, listarSensores };

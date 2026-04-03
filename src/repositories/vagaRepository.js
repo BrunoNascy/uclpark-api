@@ -24,4 +24,11 @@ async function buscarHistoricoPorSensor(sensor_id) {
   return rows;
 }
 
-module.exports = { inserir, buscarUltimoPorSensor, buscarHistoricoPorSensor };
+async function listarSensores() {
+  const [rows] = await pool.execute(
+    'SELECT DISTINCT sensor_id FROM historico_vagas ORDER BY sensor_id'
+  );
+  return rows.map((r) => r.sensor_id);
+}
+
+module.exports = { inserir, buscarUltimoPorSensor, buscarHistoricoPorSensor, listarSensores };

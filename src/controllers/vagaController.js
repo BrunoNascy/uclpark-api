@@ -39,4 +39,9 @@ async function statusAtual(req, res) {
   return res.json(ultimo);
 }
 
-module.exports = { registrar, historico, statusAtual };
+async function listarSensores(req, res) {
+  const sensores = await vagaService.listarSensores();
+  return res.json(sensores);
+}
+
+module.exports = { registrar, historico, statusAtual, listarSensores };
