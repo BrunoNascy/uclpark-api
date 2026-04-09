@@ -1,10 +1,11 @@
 const vagaRepository = require('../repositories/vagaRepository');
+const AppError = require('../errors/AppError');
 
 async function registrarLeitura({ sensor, status }) {
   const ultimo = await vagaRepository.buscarUltimoPorSensor(sensor);
 
   if (ultimo && ultimo.status === status) {
-    throw { statusCode: 400, mensagem: `Vaga já está com status "${status}"` };
+    throw new AppError(`Vaga já está com status "${status}"`);
   }
 
   const id = await vagaRepository.inserir({
@@ -28,4 +29,8 @@ async function listarSensores() {
   return vagaRepository.listarSensores();
 }
 
-module.exports = { registrarLeitura, buscarHistorico, buscarStatusAtual, listarSensores };
+async function listarStatusAtual() {
+  return vagaRepository.buscarStatusTodos();
+}
+
+module.exports = { registrarLeitura, buscarHistorico, buscarStatusAtual, listarSensores, listarStatusAtual };

@@ -31,4 +31,16 @@ async function listarSensores() {
   return rows.map((r) => r.sensor_id);
 }
 
-module.exports = { inserir, buscarUltimoPorSensor, buscarHistoricoPorSensor, listarSensores };
+async function buscarStatusTodos() {
+  const [rows] = await pool.execute(
+    `SELECT sensor_id, status, data
+     FROM historico_vagas h1
+     WHERE data = (
+       SELECT MAX(data) FROM historico_vagas h2 WHERE h2.sensor_id = h1.sensor_id
+     )
+     ORDER BY sensor_id`
+  );
+  return rows;
+}
+
+module.exports = { inserir, buscarUltimoPorSensor, buscarHistoricoPorSensor, listarSensores, buscarStatusTodos };

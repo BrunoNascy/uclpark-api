@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(netstat -tlnp)",
+      "Read(//mnt/c/repo/**)",
+      "Bash(docker compose:*)",
+      "Bash(echo \"PID: $!\")"
+    ]
+  }
+}

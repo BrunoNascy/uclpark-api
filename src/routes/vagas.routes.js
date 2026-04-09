@@ -12,6 +12,13 @@ const router = Router();
 router.get('/sensores', vagaController.listarSensores);
 
 /**
+ * @route   GET /vagas/status
+ * @desc    Retorna o status atual de todos os sensores em uma única consulta
+ * @returns {object[]} Array com o último status de cada sensor
+ */
+router.get('/status', vagaController.statusTodos);
+
+/**
  * @route   POST /vagas
  * @desc    Registra uma nova leitura de sensor (status da vaga)
  * @body    { sensor: string, status: "ocupado"|"livre" }
